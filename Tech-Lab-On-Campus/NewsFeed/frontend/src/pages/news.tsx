@@ -64,6 +64,23 @@ export default function News() {
             // Once completing you should be able to see news articles different from the dummy data originally provided.
 
             // Hint: this may be useful to figure how to fetch data: https://medium.com/@bhanu.mt.1501/api-calls-in-react-js-342a09d5315f
+            const articles = async () => {
+                const response = await fetch("/api/news/get-featured-article", {
+                    method: 'GET', 
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }   
+                })
+            }
+            const featuredArticles = async () => {
+                const response = await fetch("/api/news/get-newsfeed", {
+                    method: 'GET', 
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }   
+                })
+            }
+
         }
         fetchData();
     }, [])
@@ -76,7 +93,7 @@ export default function News() {
                     <NewsFeed articles={articles} />
 
                     {/* Once you're done with Part 4, feel free to remove the span below! */}
-                    <span className="instruction">Part 4: Connect the backend and fetch real data</span>
+                   
 
                 </div>
                 <div className="hidden lg:block col-span-1 overflow-hidden border-l border-slate-300">
