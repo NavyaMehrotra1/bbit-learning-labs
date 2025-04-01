@@ -1,6 +1,7 @@
 import React from 'react';
 import { Article } from '../utils/types';
 import NewsCard from './NewsCard';
+import { arrayBuffer } from 'stream/consumers';
 
 interface NewsFeedProps {
     articles: Article[];
@@ -18,10 +19,12 @@ function NewsFeed({ articles }: NewsFeedProps ) {
     return (
         <div className="stories-container">
             <div className="stories-grid">
-            {/* TODO: Remove the spans below and show a feed of news articles  */}
-                <span className='instruction'>Part 3: Implement News Feed</span>
-                <span className='instruction'>Part 3: Implement News Feed</span>
-                <span className='instruction'>Part 3: Implement News Feed</span>
+                {articles.map((article, i) => (
+                    <NewsCard
+                        key={`${article}_${i}`}
+                        article={article}
+                    />
+                ))}     
             </div>
         </div>
     );
