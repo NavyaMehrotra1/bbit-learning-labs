@@ -20,9 +20,17 @@ function FeaturedNewsCard({ article }: NewsCardProps) {
 
     return (
         <>
-            <span className='instruction'>Part 1: Show Featured News</span>
+            
             <div className="featured-news-card">
-                {/* TODO: Remove the span above and implement "FeaturedNewsCard" */}
+                {/* TODO: Remove the span above and implement "FeaturedNewsCard" */
+                    <div className = "featured-news-img-div">
+                    <img className = "featured-news-img" src={article.image_url} alt={article.title} />
+                    </div>  
+                }
+            </div>
+            <div className = "featured-news-info">
+`               <div className = "featured-news-title">{article.title}</div>
+                <div className = "featured-news-body">{article.body.substring(0, 200)}...</div>
             </div>
         </>
     );
