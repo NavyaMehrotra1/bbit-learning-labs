@@ -18,22 +18,27 @@ function FeaturedNewsCard({ article }: NewsCardProps) {
 
     // Hint: Some classes included in `globals.css` may help with styling.
 
-    return (
-        <>
-            
+     return (
             <div className="featured-news-card">
-                {/* TODO: Remove the span above and implement "FeaturedNewsCard" */
-                    <div className = "featured-news-img-div">
-                    <img className = "featured-news-img" src={article.image_url} alt={article.title} />
-                    </div>  
-                }
+                <div className="featured-news-img-div">
+                    <img
+                        src={article.image_url}
+                        alt={article.title}
+                        className="featured-news-img"
+                    />
+                </div>
+                <div className="featured-news-info">
+                    <h2 className="featured-story-title">{article.title}</h2>
+                    <p className="featured-story-summary">{article.body}</p>
+                    {article.author && <span className="featured-story-author">By {article.author}</span>}
+                    {article.url &&
+                        <span className="featured-story-author" >
+                            Via <Link className="origin-link" href={article.url} target="_blank">{article.url}</Link>
+                        </span>
+                    }
+                </div>
             </div>
-            <div className = "featured-news-info">
-`               <div className = "featured-news-title">{article.title}</div>
-                <div className = "featured-news-body">{article.body.substring(0, 200)}...</div>
-            </div>
-        </>
-    );
+        );
 }
 
 export default FeaturedNewsCard;

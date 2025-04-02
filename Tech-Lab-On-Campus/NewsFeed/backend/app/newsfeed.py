@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 from datetime import datetime
+
 from app.utils.redis import REDIS_CLIENT
 
 
@@ -19,32 +20,32 @@ class Article:
 
 def get_all_news() -> list[Article]:
     """Get all news articles from the datastore."""
-    # 1. Use Redis client to fetch all articles
-    # 2. Format the data into articles
-    # 3. Return a list of the articles formatted 
-    articles = REDIS_CLIENT.get_entry("all_articles")
-    if articles is None:
+    all_articles: list[dict] = REDIS_CLIENT.get_entry("all_articles")
+
+    if all_articles is None:
         return []
-    return [format_article(article) for article in articles]
+
+    return [_format_as_article(article) for article in all_articles]
 
 
 def get_featured_news() -> Article | None:
     """Get the featured news article from the datastore."""
-    # 1. Get all the articles
-    # 2. Return as a list of articles sorted by most recent date
-    articles = get_all_news
-    return articles.sort(reverse=True, key= (lambda article: article.publish_date)) if articles else None
+    # can be this or some criteria to decide which is featured.
+    all_news = get_all_news()
 
-def format_article(data: dict) -> Article:
-    """Get all news articles from the datastore."""
-    # 1. Use Redis client to fetch all articles
-    # 2. Format the data into articles
-    # 3. Return a list of the articles formatted 
-    return Article (
-        author = data["author"],
-        title = data["title"],
-        body = data["text"],
-        publish_date = datetime.fromisoformat(data["published"]),
-        image_url = data["main_image"],
-        url = data["URL"]    
+    if all_news is None:
+        print("XYZ")
+        return None
+    print("ABC")
+    return sorted(all_news, key=(lambda article: article.publish_date), reverse=True)[0]
+
+
+def _format_as_article(data: dict) -> Article:
+    return Article(
+        author=data["author"],
+        title=data["title"],
+        body=data["text"],
+        publish_date=datetime.fromisoformat(data["published"]),
+        image_url=data["thread"]["main_image"],
+        url=data["url"],
     )
