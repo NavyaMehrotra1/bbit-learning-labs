@@ -23,6 +23,8 @@ def get_all_news() -> list[Article]:
     # 2. Format the data into articles
     # 3. Return a list of the articles formatted 
     articles = REDIS_CLIENT.get_entry("all_articles")
+    if articles is None:
+        return []
     return [format_article(article) for article in articles]
 
 
@@ -31,7 +33,7 @@ def get_featured_news() -> Article | None:
     # 1. Get all the articles
     # 2. Return as a list of articles sorted by most recent date
     articles = get_all_news
-    return articles.sort(reverse=True, key= (lambda article: article.publish_date))
+    return articles.sort(reverse=True, key= (lambda article: article.publish_date)) if articles else None
 
 def format_article(data: dict) -> Article:
     """Get all news articles from the datastore."""
